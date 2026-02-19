@@ -43,28 +43,41 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDto updateGenre(Long id, GenreDto genreDto) {
-        return null;
+    public GenreDto updateGenre(Long genreId, GenreDto genreDto) throws GenreException {
+            Genre existingGenre = genreRepository.findById(genreId)
+                    .orElseThrow(() -> new GenreException("Genre not found with id: " + genreId));
+            genreMapper.updateEntityFromDto(genreDto,existingGenre);
+            Genre updatedGenre = genreRepository.save(existingGenre);
+            return genreMapper.toDTO(updatedGenre);
     }
 
     @Override
-    public void deleteGenre(Long id) {
-
+    public void deleteGenre(Long genreId) throws GenreException {
+        Genre existingGenre = genreRepository.findById(genreId)
+                .orElseThrow(() -> new GenreException("Genre not found with id: " + genreId));
+        existingGenre.setActive(false);
+        genreRepository.save(existingGenre);
     }
 
     @Override
-    public void hardDeleteGenre(Long genreId) {
-
+    public void hardDeleteGenre(Long genreId) throws GenreException {
+        Genre existingGenre = genreRepository.findById(genreId)
+                .orElseThrow(() -> new GenreException("Genre not found with id: " + genreId));
+        genreRepository.delete(existingGenre);
     }
 
     @Override
     public List<GenreDto> getAllActiveGenresWithSubGenres() {
-        return List.of();
+        List<Genre> topLevelGenres=genreRepository
+                .findByParentGenreIsNullAndActiveTrueOrderByDisplayOrderAsc();
+        return genreMapper.toDTOList(topLevelGenres);
     }
 
     @Override
     public List<GenreDto> getTopLevelGenres() {
-        return List.of();
+        List<Genre> topLevelGenres=genreRepository
+                .findByParentGenreIsNullAndActiveTrueOrderByDisplayOrderAsc();
+        return genreMapper.toDTOList(topLevelGenres);
     }
 
     @Override
@@ -74,7 +87,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public long getTotalActiveGenres() {
-        return 0;
+        return genreRepository.countByActiveTrue();
     }
 
     @Override

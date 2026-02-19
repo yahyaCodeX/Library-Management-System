@@ -6,6 +6,7 @@ import com.librarymanagment.librarymanagment.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -37,7 +38,7 @@ public class GenreMapper {
         if(savedGenre.getSubGenres()!=null && !savedGenre.getSubGenres().isEmpty()){
             responseDto.setSubGenre(savedGenre.getSubGenres().stream()
                     .filter(Genre::getActive)
-                    .map(GenreMapper::toDTO)
+                    .map(this::toDTO)
                     .collect(Collectors.toList())
             );
         }
@@ -65,4 +66,32 @@ public class GenreMapper {
         }
         return genre;
     }
+
+    public void updateEntityFromDto(GenreDto genreDto, Genre genre){
+        if(genreDto==null || genre==null){
+            return;
+        }
+        genre.setCode(genreDto.getCode());
+        genre.setName(genreDto.getName());
+        genre.setDescription(genreDto.getDescription());
+        genre.setDisplayOrder(genreDto.getDisplayOrder()!=null ? genreDto.getDisplayOrder():0);
+        genre.setActive(genreDto.getActive());
+
+        // Handle Parent Genre safely
+        if (genreDto.getParentGenreId() != null) {
+            Genre parent = genreRepository.findById(genreDto.getParentGenreId())
+                    .orElseThrow(() -> new RuntimeException("Parent Genre not found"));
+            genre.setParentGenre(parent);
+        }
+    }
+
+    public List<GenreDto> toDTOList(List<Genre> genres){
+        if(genres==null || genres.isEmpty()){
+            return List.of();
+        }
+        return genres.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
 }
