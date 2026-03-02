@@ -54,6 +54,7 @@ public class SpringSecurityConfig {
                         }));
         http.authenticationProvider(daoAuthenticationProvider());
         http.authorizeHttpRequests(auth->auth
+                .requestMatchers("/api/subscription-plans/admin/").hasRole("ADMIN")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
