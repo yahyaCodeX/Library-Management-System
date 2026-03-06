@@ -1,6 +1,7 @@
 package com.librarymanagment.librarymanagment.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -8,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -17,15 +16,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SubscriptionPlanDto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
     @NotBlank(message = "Plan code is required")
     private String planCode;
 
-    @NotBlank(message = "name  is required")
+    @NotBlank(message = "Name is required")
     private String name;
 
     private String description;
@@ -34,20 +33,19 @@ public class SubscriptionPlanDto {
     @Positive(message = "Duration must be a positive integer")
     private Integer durationDays;
 
-    @NotNull(message = " price is required")
+    @NotNull(message = "Price is required")
     @Positive(message = "Price must be a positive number")
     private Long price;
 
     private String currency;
 
-    @NotNull(message = "Max Books Allowed is required")
+    @NotNull(message = "Max books allowed is required")
     @Positive(message = "Max books allowed must be a positive integer")
     private Integer maxBooksAllowed;
 
-    @NotNull(message = "max days per book is required")
+    @NotNull(message = "Max days per book is required")
     @Positive(message = "Max days per book must be a positive integer")
     private Integer maxDaysPerBook;
-
 
     private Integer displayOrder;
 
@@ -56,9 +54,10 @@ public class SubscriptionPlanDto {
     private String badgeText;
     private String adminNotes;
 
-    @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
-    @UpdateTimestamp
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
     private String createdBy;
