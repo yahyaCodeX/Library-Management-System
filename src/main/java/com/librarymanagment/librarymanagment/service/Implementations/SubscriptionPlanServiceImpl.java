@@ -1,4 +1,4 @@
-package com.librarymanagment.librarymanagment.service;
+package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.dto.SubscriptionPlanDto;
 import com.librarymanagment.librarymanagment.entity.SubscriptionPlan;
@@ -6,6 +6,7 @@ import com.librarymanagment.librarymanagment.entity.User;
 import com.librarymanagment.librarymanagment.exception.SubscriptionPlanException;
 import com.librarymanagment.librarymanagment.mapper.SubscriptionPlanMapper;
 import com.librarymanagment.librarymanagment.repository.SubscriptionPlanRepository;
+import com.librarymanagment.librarymanagment.service.SubscriptionPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

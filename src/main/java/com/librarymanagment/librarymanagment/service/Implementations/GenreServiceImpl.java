@@ -1,10 +1,11 @@
-package com.librarymanagment.librarymanagment.service;
+package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.dto.GenreDto;
 import com.librarymanagment.librarymanagment.entity.Genre;
 import com.librarymanagment.librarymanagment.exception.GenreException;
 import com.librarymanagment.librarymanagment.mapper.GenreMapper;
 import com.librarymanagment.librarymanagment.repository.GenreRepository;
+import com.librarymanagment.librarymanagment.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

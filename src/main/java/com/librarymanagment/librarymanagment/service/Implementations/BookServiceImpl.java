@@ -1,4 +1,4 @@
-package com.librarymanagment.librarymanagment.service;
+package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.dto.BookDTO;
 import com.librarymanagment.librarymanagment.dto.request.BookSearchRequest;
@@ -7,6 +7,7 @@ import com.librarymanagment.librarymanagment.entity.Book;
 import com.librarymanagment.librarymanagment.exception.BookException;
 import com.librarymanagment.librarymanagment.mapper.BookMapper;
 import com.librarymanagment.librarymanagment.repository.BookRepository;
+import com.librarymanagment.librarymanagment.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BookServiceImpl implements  BookService {
+public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 

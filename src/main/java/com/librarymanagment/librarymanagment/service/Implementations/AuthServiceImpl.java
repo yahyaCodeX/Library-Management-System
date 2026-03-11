@@ -1,4 +1,4 @@
-package com.librarymanagment.librarymanagment.service;
+package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.dto.AuthResponse;
 import com.librarymanagment.librarymanagment.dto.UserDto;
@@ -8,6 +8,7 @@ import com.librarymanagment.librarymanagment.exception.UserException;
 import com.librarymanagment.librarymanagment.mapper.UserMapper;
 import com.librarymanagment.librarymanagment.repository.PasswordResetTokenRepository;
 import com.librarymanagment.librarymanagment.repository.UserRespository;
+import com.librarymanagment.librarymanagment.service.AuthService;
 import com.librarymanagment.librarymanagment.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
     private final UserRespository userRespository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;

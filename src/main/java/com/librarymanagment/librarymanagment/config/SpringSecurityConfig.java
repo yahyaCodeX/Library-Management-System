@@ -1,7 +1,7 @@
 package com.librarymanagment.librarymanagment.config;
 
 import com.librarymanagment.librarymanagment.filter.JwtFilter;
-import com.librarymanagment.librarymanagment.service.UserDetailServiceIMPL;
+import com.librarymanagment.librarymanagment.service.Implementations.UserDetailServiceIMPL;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -58,6 +58,8 @@ public class SpringSecurityConfig {
         http.authorizeHttpRequests(auth->auth
                 .requestMatchers("/api/subscription-plans/admin/").hasRole("ADMIN")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                // ⚠️ Stripe webhook must be PUBLIC — Stripe has no JWT token
+                .requestMatchers("/api/payments/webhook/stripe").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
         );

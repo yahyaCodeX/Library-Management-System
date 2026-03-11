@@ -1,6 +1,5 @@
 package com.librarymanagment.librarymanagment.filter;
 
-import com.librarymanagment.librarymanagment.service.UserDetailServiceIMPL;
 import com.librarymanagment.librarymanagment.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

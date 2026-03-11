@@ -1,4 +1,4 @@
-package com.librarymanagment.librarymanagment.service;
+package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.entity.User;
 import com.librarymanagment.librarymanagment.repository.UserRespository;

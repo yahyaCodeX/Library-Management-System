@@ -3,7 +3,7 @@ package com.librarymanagment.librarymanagment.controller;
 import com.librarymanagment.librarymanagment.dto.ApiResponse;
 import com.librarymanagment.librarymanagment.dto.GenreDto;
 import com.librarymanagment.librarymanagment.exception.GenreException;
-import com.librarymanagment.librarymanagment.service.GenreServiceImpl;
+import com.librarymanagment.librarymanagment.service.Implementations.GenreServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

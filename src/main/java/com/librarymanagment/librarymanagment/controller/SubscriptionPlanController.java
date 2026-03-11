@@ -2,8 +2,7 @@ package com.librarymanagment.librarymanagment.controller;
 
 import com.librarymanagment.librarymanagment.dto.ApiResponse;
 import com.librarymanagment.librarymanagment.dto.SubscriptionPlanDto;
-import com.librarymanagment.librarymanagment.service.SubscriptionPlanService;
-import com.librarymanagment.librarymanagment.service.SubscriptionPlanServiceImpl;
+import com.librarymanagment.librarymanagment.service.Implementations.SubscriptionPlanServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

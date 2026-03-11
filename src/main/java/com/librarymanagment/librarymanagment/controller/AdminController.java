@@ -2,7 +2,7 @@ package com.librarymanagment.librarymanagment.controller;
 
 import com.librarymanagment.librarymanagment.dto.BookDTO;
 import com.librarymanagment.librarymanagment.exception.BookException;
-import com.librarymanagment.librarymanagment.service.BookServiceImpl;
+import com.librarymanagment.librarymanagment.service.Implementations.BookServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

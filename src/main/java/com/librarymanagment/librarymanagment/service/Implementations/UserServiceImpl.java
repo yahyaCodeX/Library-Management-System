@@ -1,9 +1,10 @@
-package com.librarymanagment.librarymanagment.service;
+package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.dto.UserDto;
 import com.librarymanagment.librarymanagment.entity.User;
 import com.librarymanagment.librarymanagment.mapper.UserMapper;
 import com.librarymanagment.librarymanagment.repository.UserRespository;
+import com.librarymanagment.librarymanagment.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRespository userRespository;
     private final UserMapper userMapper;

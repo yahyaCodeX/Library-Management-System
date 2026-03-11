@@ -3,8 +3,9 @@ package com.librarymanagment.librarymanagment.controller;
 import com.librarymanagment.librarymanagment.dto.ApiResponse;
 import com.librarymanagment.librarymanagment.dto.SubscriptionDto;
 import com.librarymanagment.librarymanagment.dto.request.CancelSubscriptionRequest;
-import com.librarymanagment.librarymanagment.service.SubscriptionServiceImpl;
-import com.librarymanagment.librarymanagment.service.UserServiceImpl;
+import com.librarymanagment.librarymanagment.dto.response.SubscribeResponse;
+import com.librarymanagment.librarymanagment.service.Implementations.SubscriptionServiceImpl;
+import com.librarymanagment.librarymanagment.service.Implementations.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -26,11 +27,13 @@ public class SubscriptionController {
     private final UserServiceImpl userService;
 
     // ─── Subscribe (User) ────────────────────────────────────────────────────
+    // Creates an INACTIVE subscription + Stripe payment session.
+    // User must pay via the returned checkoutUrl to activate the subscription.
 
     @PostMapping("/subscribe")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<SubscriptionDto> subscribe(@Valid @RequestBody SubscriptionDto dto) {
-        SubscriptionDto result = subscriptionService.subscribe(dto);
+    public ResponseEntity<SubscribeResponse> subscribe(@Valid @RequestBody SubscriptionDto dto) {
+        SubscribeResponse result = subscriptionService.subscribe(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 

@@ -45,6 +45,12 @@ public class GlobalException {
                 .body(new ApiResponse(ex.getMessage(),false));
     }
 
+    @ExceptionHandler(PaymentException.class)
+    public ResponseEntity<ApiResponse> handlePaymentException(PaymentException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse(ex.getMessage(),false));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex){
         Map<String, String> errors = new HashMap<>();
