@@ -70,7 +70,7 @@ public class BookLoanServiceImpl implements BookLoanService {
                 .orElseThrow(() -> new BookLoanException("Book with ID " + checkoutRequest.getBookId() + " not found"));
 
         // Check book is active
-        if (!book.getActive()) {
+        if (Boolean.FALSE.equals(book.getActive())) {
             throw new BookLoanException("Book with ID " + checkoutRequest.getBookId() + " is not active");
         }
 

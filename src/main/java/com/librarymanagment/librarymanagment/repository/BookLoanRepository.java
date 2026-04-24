@@ -4,6 +4,7 @@ import com.librarymanagment.librarymanagment.constant.BookLoanStatus;
 import com.librarymanagment.librarymanagment.entity.Book;
 import com.librarymanagment.librarymanagment.entity.BookLoan;
 import com.librarymanagment.librarymanagment.entity.User;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,6 @@ public interface BookLoanRepository extends JpaRepository<BookLoan,Long> {
     Page<BookLoan> findBookLoansByDateRange(@Param("startDate")LocalDate startDate,@Param("endDate") LocalDate endDate, Pageable pageable);
 
     BookLoan book(Book book);
+
+    boolean existsByUserIdAndBookIdAndStatus(Long userId, @NotNull(message = "bookId cannot be null") Long bookId, BookLoanStatus bookLoanStatus);
 }
