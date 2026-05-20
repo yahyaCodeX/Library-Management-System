@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   PAYMENT CALLBACK PAGES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.payment-callback-page {
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.payment-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+.payment-card.success::before {
+  background: var(--color-success);
+}
+
+.payment-card.cancel::before {
+  background: var(--color-warning);
+}
+
+.payment-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.payment-card.success .payment-icon-wrapper {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+}
+
+.payment-card.cancel .payment-icon-wrapper {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+}
+
+.payment-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.payment-message {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.payment-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-actions .btn {
+  width: 100%;
+  padding: 14px;
+}

@@ -64,7 +64,7 @@ public class BookDTO {
     @Digits(integer = 8,fraction = 2,message = "Price must be a valid decimal number with up to 8 digits and 2 decimal places")
     private BigDecimal price;
 
-    @Size(max=500,message = "Cover image URL must be less than 500 characters")
+    @Size(max=65535,message = "Cover image URL must be less than 65535 characters")
     private String coverImageUrl;
 
     private Boolean alreadyHaveLoan;

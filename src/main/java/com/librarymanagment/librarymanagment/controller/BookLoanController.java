@@ -55,7 +55,7 @@ public class BookLoanController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PageResponse<BookLoanDto>> getAllBookLoans(@RequestBody BookLoanSearchRequest searchRequest){
+    public ResponseEntity<PageResponse<BookLoanDto>> getAllBookLoans(BookLoanSearchRequest searchRequest){
         PageResponse<BookLoanDto> bookLoans = bookLoanService.getBookLoans(searchRequest);
         return new ResponseEntity<>(bookLoans, HttpStatus.OK);
     }

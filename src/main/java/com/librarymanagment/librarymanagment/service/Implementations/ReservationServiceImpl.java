@@ -16,6 +16,7 @@ import com.librarymanagment.librarymanagment.repository.BookRepository;
 import com.librarymanagment.librarymanagment.repository.ReservationRepository;
 import com.librarymanagment.librarymanagment.service.BookLoanService;
 import com.librarymanagment.librarymanagment.service.ReservationService;
+import com.librarymanagment.librarymanagment.service.SubscriptionService;
 import com.librarymanagment.librarymanagment.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final BookRepository bookRepository;
     private final ReservationMapper reservationMapper;
     private final BookLoanService bookLoanService;
+    private final SubscriptionService subscriptionService;
 
     int MAX_RESERVATIONS=5;
 
@@ -54,6 +56,13 @@ public class ReservationServiceImpl implements ReservationService {
         }
         //validate user
         User user=userService.getCurrentUser();
+
+        // Check user has active subscription
+        try {
+            subscriptionService.getUsersActiveSubscription(userId);
+        } catch (Exception e) {
+            throw new Exception("You need an active subscription to reserve books");
+        }
 
         //validate Book exists
         Book book=bookRepository.findById(request.getBookId()).
