@@ -1,0 +1,152 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MY FINES PAGE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.fines-page {
+  max-width: 1200px;
+}
+
+/* Fines Summary Card */
+.fines-summary {
+  display: flex;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 32px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.fines-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.fines-summary-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-error);
+  color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.fines-summary-text h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.fines-summary-text p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.fines-summary-total {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--color-error);
+  display: flex;
+  align-items: flex-start;
+}
+.fines-summary-total .currency {
+  font-size: 18px;
+  margin-top: 4px;
+  margin-right: 2px;
+}
+
+/* Fines List */
+.fines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fine-card {
+  display: flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  transition: all var(--transition-base);
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.fine-card:hover {
+  border-color: var(--border-color-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.fine-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.fine-type {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-primary-hover);
+}
+
+.fine-reason {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.fine-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.fine-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fine-amount-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 140px;
+}
+
+.fine-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .fine-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fine-amount-section {
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+  }
+}

@@ -2,6 +2,8 @@ package com.librarymanagment.librarymanagment.service.Implementations;
 
 import com.librarymanagment.librarymanagment.constant.BookLoanStatus;
 import com.librarymanagment.librarymanagment.constant.BookLoanType;
+import com.librarymanagment.librarymanagment.constant.FineStatus;
+import com.librarymanagment.librarymanagment.constant.FineType;
 import com.librarymanagment.librarymanagment.dto.BookLoanDto;
 import com.librarymanagment.librarymanagment.dto.SubscriptionDto;
 import com.librarymanagment.librarymanagment.dto.request.BookLoanSearchRequest;
@@ -11,12 +13,14 @@ import com.librarymanagment.librarymanagment.dto.request.RenewalRequest;
 import com.librarymanagment.librarymanagment.dto.response.PageResponse;
 import com.librarymanagment.librarymanagment.entity.Book;
 import com.librarymanagment.librarymanagment.entity.BookLoan;
+import com.librarymanagment.librarymanagment.entity.Fine;
 import com.librarymanagment.librarymanagment.entity.User;
 import com.librarymanagment.librarymanagment.exception.BookException;
 import com.librarymanagment.librarymanagment.exception.BookLoanException;
 import com.librarymanagment.librarymanagment.mapper.BookLoanMapper;
 import com.librarymanagment.librarymanagment.repository.BookLoanRepository;
 import com.librarymanagment.librarymanagment.repository.BookRepository;
+import com.librarymanagment.librarymanagment.repository.FineRepository;
 import com.librarymanagment.librarymanagment.repository.UserRespository;
 import com.librarymanagment.librarymanagment.service.BookLoanService;
 import com.librarymanagment.librarymanagment.service.UserService;
@@ -42,6 +46,7 @@ public class BookLoanServiceImpl implements BookLoanService {
     private final SubscriptionServiceImpl subscriptionService;
     private final UserService userService;
     private final BookLoanMapper mapper;
+    private final FineRepository fineRepository;
 
     @Override
     @Transactional
@@ -160,6 +165,9 @@ public class BookLoanServiceImpl implements BookLoanService {
             long overdueDays = ChronoUnit.DAYS.between(originalDueDate, returnedToday);
             bookLoan.setIsOverdue(true);
             bookLoan.setOverdueDays((int) overdueDays);
+            
+            // Auto-generate or update fine
+            generateOrUpdateOverdueFine(bookLoan, overdueDays);
         } else {
             bookLoan.setIsOverdue(false);
             bookLoan.setOverdueDays(0);
@@ -287,7 +295,8 @@ public class BookLoanServiceImpl implements BookLoanService {
                 long overdueDays = ChronoUnit.DAYS.between(bookLoan.getReturnDate(), LocalDate.now());
                 bookLoan.setOverdueDays((int) overdueDays);
 
-                // TODO: Calculate fine based on overdue days
+                // Auto-generate or update fine
+                generateOrUpdateOverdueFine(bookLoan, overdueDays);
 
                 bookLoanRepository.save(bookLoan);
                 updateCount++;
@@ -296,6 +305,32 @@ public class BookLoanServiceImpl implements BookLoanService {
 
         return updateCount;
     }
+    private void generateOrUpdateOverdueFine(BookLoan bookLoan, long overdueDays) {
+        long dailyFineRate = 1L; // $1 per day overdue
+        long totalFineAmount = overdueDays * dailyFineRate;
+
+        java.util.Optional<Fine> existingFineOpt = fineRepository.findByBookLoanIdAndFineType(bookLoan.getId(), FineType.OVERDUE);
+        if (existingFineOpt.isPresent()) {
+            Fine fine = existingFineOpt.get();
+            if (fine.getFineStatus() == FineStatus.PENDING) {
+                fine.setAmount(totalFineAmount);
+                fine.setReason("Book overdue by " + overdueDays + " days");
+                fineRepository.save(fine);
+            }
+        } else {
+            Fine newFine = Fine.builder()
+                    .user(bookLoan.getUser())
+                    .bookLoan(bookLoan)
+                    .fineType(FineType.OVERDUE)
+                    .amount(totalFineAmount)
+                    .fineStatus(FineStatus.PENDING)
+                    .reason("Book overdue by " + overdueDays + " days")
+                    .note("Auto-generated fine for overdue book")
+                    .build();
+            fineRepository.save(newFine);
+        }
+    }
+
     /**
      * Helper method to create Pageable with size limits and sorting
      */

@@ -65,13 +65,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
         // 6. Create Stripe checkout session for this subscription's price
         String transactionId = "TXN-" + UUID.randomUUID().toString().toUpperCase().replace("-", "").substring(0, 16);
-        String currency = saved.getSubscriptionPlan().getCurrency() != null
-                ? saved.getSubscriptionPlan().getCurrency().toLowerCase()
-                : "usd";
+        String currency = "usd"; // Enforce USD to match frontend UI
         String productName = saved.getPlanName() + " - " + saved.getSubscriptionPlan().getDurationDays() + " days";
 
         Session stripeSession = stripeService.createCheckoutSession(
-                saved.getPrice(),      // amount from the plan
+                saved.getPrice() * 100,      // amount from the plan multiplied by 100 to convert to cents
                 currency,
                 productName,
                 transactionId

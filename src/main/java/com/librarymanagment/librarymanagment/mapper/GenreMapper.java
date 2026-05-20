@@ -46,12 +46,28 @@ public class GenreMapper {
         return responseDto;
     }
 
+    private String generateCode(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return "GENRE_" + System.currentTimeMillis();
+        }
+        return name.trim().toUpperCase()
+                .replaceAll("[^A-Z0-9\\s]", "")
+                .replaceAll("\\s+", "_");
+    }
+
     public Genre toEntity(GenreDto genreDto){
         if(genreDto==null){
             return null;
         }
+        String code = genreDto.getCode();
+        if (code == null || code.trim().isEmpty()) {
+            code = generateCode(genreDto.getName());
+        } else {
+            code = code.trim().toUpperCase().replaceAll("\\s+", "_");
+        }
+
         Genre genre = Genre.builder()
-                .code(genreDto.getCode())
+                .code(code)
                 .name(genreDto.getName())
                 .description(genreDto.getDescription())
                 .displayOrder(genreDto.getDisplayOrder())
@@ -71,7 +87,13 @@ public class GenreMapper {
         if(genreDto==null || genre==null){
             return;
         }
-        genre.setCode(genreDto.getCode());
+        String code = genreDto.getCode();
+        if (code == null || code.trim().isEmpty()) {
+            code = generateCode(genreDto.getName());
+        } else {
+            code = code.trim().toUpperCase().replaceAll("\\s+", "_");
+        }
+        genre.setCode(code);
         genre.setName(genreDto.getName());
         genre.setDescription(genreDto.getDescription());
         genre.setDisplayOrder(genreDto.getDisplayOrder()!=null ? genreDto.getDisplayOrder():0);

@@ -33,8 +33,8 @@ public class PaymentInitiateRequest {
     @Positive(message = "Amount must be positive")
     private Long amount;
 
-    // Currency code — "inr", "usd", "eur" etc. Defaults to "inr"
-    private String currency = "inr";
+    // Currency code — "inr", "usd", "eur" etc. Defaults to "usd"
+    private String currency = "usd";
 
     @Size(max = 500,message = "Description can be at most 500 characters")
     private String description;

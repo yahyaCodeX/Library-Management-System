@@ -45,6 +45,7 @@ public class Book {
 
     private Integer pages;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -55,6 +56,7 @@ public class Book {
 
     private BigDecimal price;
 
+    @Column(columnDefinition = "TEXT")
     private String coverImageUrl;
 
     @Column(nullable = false)

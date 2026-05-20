@@ -1,0 +1,194 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MY LOANS PAGE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.loans-page {
+  max-width: 1200px;
+}
+
+.loans-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.loans-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.status-filter {
+  display: flex;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  padding: 4px;
+  gap: 4px;
+}
+
+.status-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.status-btn.active {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.status-btn:hover:not(.active) {
+  color: var(--text-primary);
+}
+
+.loans-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loan-item-card {
+  display: flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  gap: 20px;
+  transition: all var(--transition-base);
+}
+
+.loan-item-card:hover {
+  border-color: var(--border-color-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.loan-cover {
+  width: 90px;
+  height: 130px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loan-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loan-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.loan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.loan-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.loan-author {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.loan-dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--bg-glass);
+  border-radius: var(--radius-md);
+}
+
+.date-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.date-value {
+  font-size: 14px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.loan-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.loan-fine-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-error);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--color-error-bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* Modal styles for Renewal */
+.renew-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .loan-item-card {
+    flex-direction: column;
+  }
+  .loan-cover {
+    width: 120px;
+    height: 170px;
+    margin: 0 auto;
+  }
+  .loan-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

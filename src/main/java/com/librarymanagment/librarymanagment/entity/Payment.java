@@ -33,6 +33,8 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
+    private Long fineId;
+
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 

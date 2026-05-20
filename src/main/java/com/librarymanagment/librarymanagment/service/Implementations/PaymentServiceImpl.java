@@ -10,11 +10,14 @@ import com.librarymanagment.librarymanagment.dto.response.PaymentInitiateRespons
 import com.librarymanagment.librarymanagment.entity.Payment;
 import com.librarymanagment.librarymanagment.entity.Subscription;
 import com.librarymanagment.librarymanagment.entity.User;
+import com.librarymanagment.librarymanagment.constant.FineStatus;
+import com.librarymanagment.librarymanagment.entity.Fine;
 import com.librarymanagment.librarymanagment.exception.PaymentException;
 import com.librarymanagment.librarymanagment.mapper.PaymentMapper;
 import com.librarymanagment.librarymanagment.repository.PaymentRepository;
 import com.librarymanagment.librarymanagment.repository.SubscriptionRepository;
 import com.librarymanagment.librarymanagment.repository.UserRespository;
+import com.librarymanagment.librarymanagment.repository.FineRepository;
 import com.librarymanagment.librarymanagment.service.Gateway.StripeService;
 import com.librarymanagment.librarymanagment.service.PaymentService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -58,6 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentMapper paymentMapper;
     private final StripeService stripeService;
     private final SubscriptionServiceImpl subscriptionService;
+    private final FineRepository fineRepository;
 
     @Override
     @Transactional
@@ -74,7 +78,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         String transactionId = "TXN-" + UUID.randomUUID().toString().toUpperCase().replace("-", "").substring(0, 16);
 
-        String currency = (request.getCurrency() != null) ? request.getCurrency().toLowerCase() : "USD";
+        String currency = (request.getCurrency() != null) ? request.getCurrency().toLowerCase() : "usd";
 
         String productName = (request.getDescription() != null)
                 ? request.getDescription()
@@ -90,6 +94,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = new Payment();
         payment.setUser(user);
         payment.setSubscription(subscription);
+        payment.setFineId(request.getFineId());
         payment.setPaymentType(request.getPaymentType() != null ? request.getPaymentType() : PaymentType.MEMBERSHIP);
         payment.setPaymentStatus(PaymentStatus.PENDING);  // ← PENDING until webhook confirms
         payment.setGateway(PaymentGateway.STRIPE);
@@ -169,6 +174,20 @@ public class PaymentServiceImpl implements PaymentService {
                         payment.getSubscription().getId());
                 System.out.println("✅ Subscription " + payment.getSubscription().getId()
                         + " activated via payment webhook");
+            }
+            
+            // ── STEP 6: Mark fine as paid if applicable ────────────────────────
+            if (payment.getFineId() != null) {
+                java.util.Optional<Fine> fineOpt = fineRepository.findById(payment.getFineId());
+                if (fineOpt.isPresent()) {
+                    Fine fine = fineOpt.get();
+                    fine.applyPayment(payment.getAmount());
+                    fine.setTransactionId(payment.getTransactionId());
+                    fine.setFineStatus(FineStatus.PAID);
+                    fine.setUpdatedAt(LocalDateTime.now());
+                    fineRepository.save(fine);
+                    System.out.println("✅ Fine " + payment.getFineId() + " marked as PAID via payment webhook");
+                }
             }
         } else {
             // checkout.session.expired
